@@ -3,6 +3,7 @@ package com.android.floodfill
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -23,9 +24,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-
         myView = MyView(this)
+       myView!!.setLayoutParams(ViewGroup.LayoutParams(1000, 1000))
         relative_layout.addView(myView)
+
+
+
+
 
         btn_blue.setOnClickListener { myView!!.paint.color = Color.BLUE }
         btn_red.setOnClickListener { myView!!.paint.color = Color.RED }
