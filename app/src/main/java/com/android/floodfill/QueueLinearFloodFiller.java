@@ -9,15 +9,15 @@ import java.util.Queue;
 
 public class QueueLinearFloodFiller {
 
-    protected Bitmap image = null;
-    protected int[] tolerance = new int[]{0, 0, 0};
-    protected int width = 0;
-    protected int height = 0;
-    protected int[] pixels = null;
-    protected int fillColor = 0;
-    protected int[] startColor = new int[]{0, 0, 0};
-    protected boolean[] pixelsChecked;
-    protected Queue<FloodFillRange> ranges;
+    private Bitmap image = null;
+    private int[] tolerance = new int[]{0, 0, 0};
+    private int width = 0;
+    private int height = 0;
+    private int[] pixels = null;
+    private int fillColor = 0;
+    private int[] startColor = new int[]{0, 0, 0};
+    private boolean[] pixelsChecked;
+    private Queue<FloodFillRange> ranges;
 
     // Construct using an image and a copy will be made to fill into,
     // Construct with BufferedImage and flood fill will write directly to
@@ -91,7 +91,7 @@ public class QueueLinearFloodFiller {
         image.getPixels(pixels, 0, width, 1, 1, width - 1, height - 1);
     }
 
-    protected void prepare() {
+    private void prepare() {
         // Called before starting flood-fill
         pixelsChecked = new boolean[pixels.length];
         ranges = new LinkedList<FloodFillRange>();
@@ -159,7 +159,7 @@ public class QueueLinearFloodFiller {
     // to be processed in the main loop.
 
     // int x, int y: The starting coords
-    protected void LinearFill(int x, int y) {
+    private void LinearFill(int x, int y) {
         // ***Find Left Edge of Color Area
         int lFillLoc = x; // the location to check/fill on the left
         int pxIdx = (width * y) + x;
@@ -214,7 +214,7 @@ public class QueueLinearFloodFiller {
     }
 
     // Sees if a pixel is within the color tolerance range.
-    protected boolean CheckPixel(int px) {
+    private boolean CheckPixel(int px) {
         int red = (pixels[px] >>> 16) & 0xff;
         int green = (pixels[px] >>> 8) & 0xff;
         int blue = pixels[px] & 0xff;
@@ -227,7 +227,7 @@ public class QueueLinearFloodFiller {
     }
 
     // Represents a linear range to be filled and branched from.
-    protected class FloodFillRange {
+    private class FloodFillRange {
         public int startX;
         public int endX;
         public int Y;
@@ -239,3 +239,4 @@ public class QueueLinearFloodFiller {
         }
     }
 }
+

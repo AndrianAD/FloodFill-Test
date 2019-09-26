@@ -19,7 +19,7 @@
         app:flingEnabled="true"
         app:hasClickableChildren="true"
         app:horizontalPanEnabled="true"
-        app:layout_constraintBottom_toTopOf="@id/linear"
+        app:layout_constraintBottom_toTopOf="@id/rv_parent"
         app:layout_constraintTop_toTopOf="parent"
         app:maxZoom="2.5"
         app:maxZoomType="zoom"
@@ -40,38 +40,18 @@
         <RelativeLayout
             android:id="@+id/relative_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
     </com.otaliastudios.zoom.ZoomLayout>
 
-
-    <LinearLayout
-        android:id="@+id/linear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_parent"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="160dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/zoom">
-
-        <Button
-            android:id="@+id/btn_red"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="red" />
-
-        <Button
-            android:id="@+id/btn_yellow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="yellow" />
-
-        <Button
-            android:id="@+id/btn_blue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="blue" />
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@id/zoom" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

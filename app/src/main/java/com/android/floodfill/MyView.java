@@ -6,7 +6,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
@@ -21,7 +20,7 @@ public class MyView extends View {
     ProgressDialog pd;
     final Point p1 = new Point();
     Canvas canvas;
-    Paint paint;
+    public Paint paint;
 
     // Bitmap mutableBitmap ;
     public MyView(Context context) {
@@ -35,14 +34,12 @@ public class MyView extends View {
         paint.setStrokeWidth(5f);
         mBitmap = BitmapFactory.decodeResource(getResources(),
                 R.drawable.dada).copy(Bitmap.Config.ARGB_8888, true);
-
         this.path = new Path();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         this.canvas = canvas;
-        paint.setColor(Color.GREEN);
         canvas.drawBitmap(mBitmap, 0, 0, paint);
 
     }
@@ -51,18 +48,22 @@ public class MyView extends View {
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX();
         float y = event.getY();
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-
-                p1.x = (int) x;
-                p1.y = (int) y;
-                final int sourceColor = mBitmap.getPixel((int) x, (int) y);
-                final int targetColor = paint.getColor();
-                new TheTask(mBitmap, p1, sourceColor, targetColor).execute();
-                invalidate();
+        if (event.getAction() == MotionEvent.ACTION_MOVE) {
+            return true;
         }
-        return true;
+
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+            p1.x = (int) x;
+            p1.y = (int) y;
+            final int sourceColor = mBitmap.getPixel((int) x, (int) y);
+            final int targetColor = paint.getColor();
+            new TheTask(mBitmap, p1, sourceColor, targetColor).execute();
+            invalidate();
+            return true;
+        } else
+            return true;
     }
+
 
     public void clear() {
         path.reset();
