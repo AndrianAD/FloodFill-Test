@@ -31,9 +31,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        supportActionBar?.hide()
 
-
-        var mBitmap = BitmapFactory.decodeResource(
+        val mBitmap = BitmapFactory.decodeResource(
             resources,
             R.drawable.dada
         ).copy(Bitmap.Config.ARGB_8888, true)
