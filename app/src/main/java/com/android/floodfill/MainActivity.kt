@@ -43,7 +43,21 @@ class MainActivity : AppCompatActivity() {
         myView!!.layoutParams = ViewGroup.LayoutParams(mBitmap.width, mBitmap.height)
         relative_layout.addView(myView)
 
+
+
         initRecycler()
+
+
+        undo.setOnClickListener {
+            if (myView!!.savedImage > 0) {
+                var memento = myView!!.caretaker.getMemento(myView!!.savedImage - 1)
+                var bitmap =
+                    myView!!.restoreFromMemento(memento)
+                myView!!.savedImage--
+                myView!!.mBitmap = bitmap
+                myView!!.invalidate()
+            }
+        }
 
     }
 
@@ -87,4 +101,6 @@ class MainActivity : AppCompatActivity() {
             ChildModel(Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256)))
         )
     }
+
+
 }

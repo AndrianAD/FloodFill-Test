@@ -13,6 +13,8 @@ import android.os.AsyncTask;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.android.floodfill.adapters.Caretaker;
+
 public class MyView extends View {
 
     private Path path;
@@ -21,10 +23,14 @@ public class MyView extends View {
     final Point p1 = new Point();
     Canvas canvas;
     public Paint paint;
+    public Caretaker caretaker= new Caretaker();
+    public int savedImage=0;
+
 
     // Bitmap mutableBitmap ;
     public MyView(Context context) {
         super(context);
+
 
         paint = new Paint();
         paint.setAntiAlias(true);
@@ -55,6 +61,12 @@ public class MyView extends View {
         if (event.getAction() == MotionEvent.ACTION_UP) {
             p1.x = (int) x;
             p1.y = (int) y;
+
+            //save Bitmap in history
+
+            caretaker.addMemento(saveInMemento());
+            savedImage++;
+
             final int sourceColor = mBitmap.getPixel((int) x, (int) y);
             final int targetColor = paint.getColor();
             // if color is black
@@ -118,5 +130,13 @@ public class MyView extends View {
             pd.dismiss();
             invalidate();
         }
+    }
+
+    Memento saveInMemento() {
+        return new Memento(mBitmap.copy(Bitmap.Config.ARGB_8888, true));
+    }
+
+    public Bitmap restoreFromMemento(Memento memento){
+        return memento.getBitmap();
     }
 }

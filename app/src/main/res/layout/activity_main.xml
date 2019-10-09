@@ -8,7 +8,16 @@
     android:fitsSystemWindows="true"
     tools:context="com.android.floodfill.MainActivity">
 
+<Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/undo"
+    android:text="undo"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
 
+
+    />
     <com.otaliastudios.zoom.ZoomLayout
         android:id="@+id/zoom"
         android:layout_width="match_parent"
