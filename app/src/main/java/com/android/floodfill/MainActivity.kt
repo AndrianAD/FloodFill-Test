@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity() {
                 var memento = myView!!.caretaker.getMemento(myView!!.savedImage - 1)
                 var bitmap =
                     myView!!.restoreFromMemento(memento)
+                myView!!.caretaker.deleteMemento(myView!!.savedImage-1)
                 myView!!.savedImage--
                 myView!!.mBitmap = bitmap
                 myView!!.invalidate()

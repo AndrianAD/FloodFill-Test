@@ -15,4 +15,8 @@ public class Caretaker {
     public Memento getMemento (int index) {
         return savedBitmap.get(index);
     }
+
+    public void deleteMemento (int index) {
+        savedBitmap.remove(index);
+    }
 }

@@ -69,6 +69,7 @@ public class MyView extends View {
 
             final int sourceColor = mBitmap.getPixel((int) x, (int) y);
             final int targetColor = paint.getColor();
+
             // if color is black
             if (sourceColor == -16777216) {
                 return true;
