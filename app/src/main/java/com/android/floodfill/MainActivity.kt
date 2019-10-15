@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity() {
 
         undo.setOnClickListener {
             if (myView!!.savedImage > 0) {
+
                 var memento = myView!!.caretaker.getMemento(myView!!.savedImage - 1)
                 var bitmap =
                     myView!!.restoreFromMemento(memento)

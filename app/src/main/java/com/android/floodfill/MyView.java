@@ -6,14 +6,13 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.os.AsyncTask;
 import android.view.MotionEvent;
 import android.view.View;
-
-import com.android.floodfill.adapters.Caretaker;
 
 public class MyView extends View {
 
@@ -23,8 +22,10 @@ public class MyView extends View {
     final Point p1 = new Point();
     Canvas canvas;
     public Paint paint;
-    public Caretaker caretaker= new Caretaker();
-    public int savedImage=0;
+    public Caretaker caretaker = new Caretaker();
+    public int savedImage = 0;
+    private int[] sourceColorRGB = new int[]{0, 0, 0};
+    private int[] targetColorRGB = new int[]{0, 0, 0};
 
 
     // Bitmap mutableBitmap ;
@@ -64,16 +65,17 @@ public class MyView extends View {
 
             //save Bitmap in history
 
+
+            int sourceColor = mBitmap.getPixel((int) x, (int) y);
+            int targetColor = paint.getColor();
+
+            sourceColorRGB = setColorRGB(sourceColorRGB, sourceColor);
+            targetColorRGB = setColorRGB(targetColorRGB, targetColor);
+
+            //save to Memento
             caretaker.addMemento(saveInMemento());
             savedImage++;
 
-            final int sourceColor = mBitmap.getPixel((int) x, (int) y);
-            final int targetColor = paint.getColor();
-
-            // if color is black
-            if (sourceColor == -16777216) {
-                return true;
-            }
             new TheTask(mBitmap, p1, sourceColor, targetColor).execute();
             invalidate();
             return true;
@@ -85,6 +87,13 @@ public class MyView extends View {
     public void clear() {
         path.reset();
         invalidate();
+    }
+
+    public int[] setColorRGB(int[] array, int targetColor) {
+        array[0] = Color.red(targetColor);
+        array[1] = Color.green(targetColor);
+        array[2] = Color.blue(targetColor);
+        return array;
     }
 
     public int getCurrentPaintColor() {
@@ -121,7 +130,7 @@ public class MyView extends View {
         @Override
         protected Void doInBackground(Void... params) {
             QueueLinearFloodFiller filler = new QueueLinearFloodFiller(mBitmap, targetColor, replacementColor);
-            filler.setTolerance(160);
+            filler.setTolerance(130);
             filler.floodFill(pt.x, pt.y);
             return null;
         }
@@ -137,7 +146,7 @@ public class MyView extends View {
         return new Memento(mBitmap.copy(Bitmap.Config.ARGB_8888, true));
     }
 
-    public Bitmap restoreFromMemento(Memento memento){
+    public Bitmap restoreFromMemento(Memento memento) {
         return memento.getBitmap();
     }
 }
