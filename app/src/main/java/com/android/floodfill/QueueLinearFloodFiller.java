@@ -2,7 +2,6 @@ package com.android.floodfill;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -26,17 +25,11 @@ public class QueueLinearFloodFiller {
         copyImage(img);
     }
 
-    public QueueLinearFloodFiller(Bitmap img, int targetColor, int newColor) {
+    public QueueLinearFloodFiller(Bitmap img, int[] selectedColor, int newColor) {
         useImage(img);
 
         setFillColor(newColor);
-        setTargetColor(targetColor);
-    }
-
-    public void setTargetColor(int targetColor) {
-        startColor[0] = Color.red(targetColor);
-        startColor[1] = Color.green(targetColor);
-        startColor[2] = Color.blue(targetColor);
+        this.startColor=selectedColor;
     }
 
     public int getFillColor() {

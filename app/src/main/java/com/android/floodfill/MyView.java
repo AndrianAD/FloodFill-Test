@@ -14,6 +14,8 @@ import android.os.AsyncTask;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.Arrays;
+
 public class MyView extends View {
 
     private Path path;
@@ -71,12 +73,17 @@ public class MyView extends View {
 
             sourceColorRGB = setColorRGB(sourceColorRGB, sourceColor);
             targetColorRGB = setColorRGB(targetColorRGB, targetColor);
+             int[] blackColorRGB= new int[]{0, 0, 0};
+
+            if (Arrays.equals(sourceColorRGB,blackColorRGB)) {
+                return false;
+            }
 
             //save to Memento
             caretaker.addMemento(saveInMemento());
             savedImage++;
 
-            new TheTask(mBitmap, p1, sourceColor, targetColor).execute();
+            new TheTask(mBitmap, p1, sourceColorRGB, targetColor).execute();
             invalidate();
             return true;
         } else
@@ -105,13 +112,16 @@ public class MyView extends View {
 
         Bitmap bmp;
         Point pt;
-        int replacementColor, targetColor;
+        int replacementColor;
+        int[] targetColor;
 
-        public TheTask(Bitmap bm, Point p, int sc, int tc) {
+
+
+        public TheTask(Bitmap bm, Point p, int[] selectedColor, int targetColor) {
             this.bmp = bm;
             this.pt = p;
-            this.replacementColor = tc;
-            this.targetColor = sc;
+            this.replacementColor = targetColor;
+            this.targetColor = selectedColor;
             pd.setMessage("Filling....");
             pd.show();
         }
@@ -130,7 +140,7 @@ public class MyView extends View {
         @Override
         protected Void doInBackground(Void... params) {
             QueueLinearFloodFiller filler = new QueueLinearFloodFiller(mBitmap, targetColor, replacementColor);
-            filler.setTolerance(130);
+            filler.setTolerance(150);
             filler.floodFill(pt.x, pt.y);
             return null;
         }
